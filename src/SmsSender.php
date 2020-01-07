@@ -1,5 +1,5 @@
 <? 
-namespace Programmers4u\gatesms\sender;
+namespace Programmers4u\gatesms\sms\sender;
 
 /*******************************************************************
 *   SKRYPT WEBAPI (sms api) DO WYSYŁANIA SMS GATESMS.EU            *
@@ -13,19 +13,12 @@ class SmsSender {
     private $smsTyp; 
     private $login; 
     private $pass;
-    private $pl;
-    private $wap;
     private $transaction;
     private $test;
-    private $contact;
     private $selfNumber;
     private $secure; 
     private $time;
-    private $name;
     private $import;
-    private $hlr;
-    private $massGroup;
-    private $email;
     private $pakiet;
     private $msg_info;
     private $smsConnect;
@@ -36,22 +29,17 @@ class SmsSender {
     public function SmsSender() {
         $this->smsTyp="sms";
         $this->from="";
-        $this->wap="";
-        $this->pl=0;      
         $this->test=0;  
         $this->msg_info=0;  
         $this->transaction=0;
         $this->import=0;
-        $this->contact=0;
-        $this->name="";
-        $this->email="";
         $this->pakiet="";
         $this->selfNumber=-1;
         $this->secure=0;
         $this->time=time();
         $this->smsConnect=null;
         $this->server=0;
-        $this->servers=array('gatesms.eu');
+        $this->servers=['gatesms.eu'];
         $this->Connection();
     }
         
@@ -75,20 +63,8 @@ class SmsSender {
         $this->to=$to;
     }
 
-    public function setPL($pl) {
-        $this->pl=$pl;
-    }
-
-    public function setWap($wap) {
-        $this->wap=$wap;
-    }
-
     public function setTest($test=1) {
         $this->test=$test;
-    }
-
-    public function setContact($contact=1) {
-        $this->contact=$contact;
     }
 
     public function setTransaction($transaction=1) {
@@ -116,11 +92,7 @@ class SmsSender {
         );
         $this->msg=($this->smsTyp!='premium') ? strtr($msg,$replacement) : $msg;	
     }
-        
-    public function ChangeServer($id) {
-        $this->server=$id;	
-    }
-                
+                        
     private function Connection() {
         	
         $url=($this->secure)?"https://".$this->servers[$this->server]."/sms_api.php":"http://".$this->servers[$this->server]."/sms_api.php";
@@ -156,39 +128,48 @@ class SmsSender {
         $fields.="&check_credit=1";                                     
         if(!$this->smsConnect) $this->Connection();
         curl_setopt($this->smsConnect, CURLOPT_POSTFIELDS, $fields);
-        return curl_exec($this->smsConnect);
+        return (string) curl_exec($this->smsConnect);
     }
-        
+
+    /**
+     * sendSms function
+     *
+     * @return mixed
+     */    
     public function sendSms() {
-        $out="";
+
+        if(!$this->login) return false;
+        if(!$this->pass) return false;
+        if(!$this->to) return false;
+        if(!$this->msg) return false;
+
         $fields="login=".$this->login;
         $fields.="&pass=".$this->pass;
+
         if($this->pakiet=='') {
         	$fields.="&msg=".$this->msg; 
         	$fields.="&to=".$this->to;
         } else {
         	$fields.="&pakiet=".$this->pakiet;
         };
+
         $fields.="&sms_type=".$this->smsTyp;
         $fields.="&from=".$this->from;
-        $fields.="&pl=".$this->pl; 
-        $fields.="&wap=".$this->wap; 
         $fields.="&transaction=".$this->transaction; 
         $fields.="&test=".$this->test; 
         $fields.="&msg_info=".$this->msg_info; 
-        $fields.="&contact=".$this->contact; 
         $fields.="&self_number=".$this->selfNumber; 
         $fields.="&time=".$this->time;             
-        $fields.="&name=".$this->name;
         $fields.="&import=".$this->import;             
-        $fields.="&email=".$this->email;                                      
 			
         if(!$this->smsConnect) $this->Connection();
         curl_setopt($this->smsConnect, CURLOPT_POSTFIELDS, $fields);
-        return curl_exec($this->smsConnect);
+        $response = curl_exec($this->smsConnect);
+        $response = explode(",",$response);
+        return $response;
     }
 
-    public function ConnectClose() {
+    private function ConnectClose() {
         if($this->smsConnect) curl_close($this->smsConnect);
     }
 
@@ -197,4 +178,3 @@ class SmsSender {
     }
 
 };
-?>
