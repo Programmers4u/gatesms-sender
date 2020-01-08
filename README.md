@@ -1,4 +1,5 @@
 # GateSMS Sender
+[!['new release v0.1']]
 
 SMS Sender class allow you send text messages from your own mobile phone for free.
 
