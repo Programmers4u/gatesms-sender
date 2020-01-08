@@ -2,4 +2,5 @@
 /vendor/
 composer.phar
 .env
+composer.lock
 !.gitignore
