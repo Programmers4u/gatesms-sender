@@ -1,5 +1,7 @@
 # GateSMS Sender
 
+SMS Sender class allow you send text messages from your own mobile phone for free.
+
 ## Installation
 
 ```bash
@@ -8,18 +10,16 @@ $ composer install
 
 ```
 
-## Contribute
-
-## List of Contributors
-
 ## Test
+
+www.gatesms.eu - register first!
 
 ```bash
 
-$ cp .env.template .env
+$ cp ./Test/.env.template ./Test/.env
 
 ```
 
-Type your settings
+Enter your settings in the .env file and ...
 
 ./vendor/bin/phpunit tests/
