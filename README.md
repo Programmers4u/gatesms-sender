@@ -8,6 +8,10 @@ SMS Sender class allow you send text messages from your own mobile phone for fre
 
 $ composer install
 
+or
+
+composer require programmers4u/gatesms-sender
+
 ```
 
 ## Test
