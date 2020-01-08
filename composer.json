@@ -1,6 +1,7 @@
 {
     "name": "programmers4u/sms_sender",
     "description": "Packet allow send sms massage",
+    "license" : "MIT",
     "authors": [
         {
             "name": "Marcin Kania",
