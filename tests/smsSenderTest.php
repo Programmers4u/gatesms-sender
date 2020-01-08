@@ -30,21 +30,6 @@ final class smsSenderTest extends TestCase
         $this->assertIsArray(explode(';',$res));
     }
     
-    public function testSendSMSBadLogin(): void {
-        global $env;
-        $sms = new SmsSender();
-        $sms->setTest(1);
-        $sms->setSelfNumber($env->selfnumber);
-        $sms->setLogin('fake@login.com');
-        $sms->setPass($env->pass);
-        $sms->setTo($env->tonumber);
-        $sms->setMsg($env->message);
-        $res = $sms->sendSms();
-
-        $out = $this->resultToArray($res);
-        $this->assertEquals('001',$out[0]['Status']);    
-    }
-
     public function testSendSMS(): void {
         global $env;
         $sms = new SmsSender();
@@ -83,11 +68,26 @@ final class smsSenderTest extends TestCase
         $sms->setLogin($env->login);
         $sms->setPass($env->pass);
         $sms->setTo(substr($env->tonumber,2));
-        $sms->setMsg($env->message);
+        $sms->setMsg(substr($env->message,4));
         $res = $sms->sendSms();
 
         $out = $this->resultToArray($res);
         $this->assertEquals('106',$out[0]['Status']);
+    }
+
+    public function testSendSMSBadLogin(): void {
+        global $env;
+        $sms = new SmsSender();
+        $sms->setTest(1);
+        $sms->setSelfNumber($env->selfnumber);
+        $sms->setLogin('fake@login.com');
+        $sms->setPass($env->pass);
+        $sms->setTo($env->tonumber);
+        $sms->setMsg(substr($env->message,5));
+        $res = $sms->sendSms();
+
+        $out = $this->resultToArray($res);
+        $this->assertEquals('001',$out[0]['Status']);    
     }
 
     private function resultToArray(string $result): array {
