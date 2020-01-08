@@ -14,7 +14,11 @@ $ composer install
 
 ## Test
 
-cp .env.template .env
+```bash
+
+$ cp .env.template .env
+
+```
 
 Type your settings
 
