@@ -10,7 +10,7 @@ $ composer install
 
 or
 
-composer require programmers4u/gatesms-sender
+$ composer require programmers4u/gatesms-sender
 
 ```
 
