@@ -1,6 +1,6 @@
 {
-    "name": "programmers4u/sms_sender",
-    "description": "Packet allow send sms massage",
+    "name": "programmers4u/gatesms_sender",
+    "description": "The package allows you to send free SMS messages by your mobile phone.",
     "license" : "MIT",
     "authors": [
         {
