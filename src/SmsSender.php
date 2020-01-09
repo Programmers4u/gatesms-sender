@@ -1,4 +1,5 @@
-<? 
+<?php
+
 namespace Programmers4u\gatesms\sms\sender;
 
 /*******************************************************************
@@ -178,3 +179,5 @@ class SmsSender {
     }
 
 };
+
+?>
